@@ -3,12 +3,23 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fish = require("./models/fish");
+
+
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var fishRouter = require('./routes/fish');
 var gridRouter = require('./routes/grid');
 var pickRouter = require('./routes/pick');
+var resourceRouter = require('./routes/resource');
 
 var app = express();
 
@@ -27,6 +38,8 @@ app.use('/users', usersRouter);
 app.use('/fish', fishRouter);
 app.use('/grid', gridRouter);
 app.use('/pick', pickRouter);
+app.use('/resource', resourceRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -42,5 +55,49 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// We can seed the collection if needed on
+
+async function recreateDB(){
+// Delete everything
+await fish.deleteMany();
+let instance1 = new
+fish({name:"beta fish", life_span:4,color:"red"});
+instance1.save().then(doc=>{
+console.log("First object saved")}
+).catch(err=>{
+console.error(err)
+});
+
+let instance2 = new
+fish({name:"Clownfish", life_span:6 ,color:"orange"});
+instance2.save().then(doc=>{
+console.log("Second object saved")}
+).catch(err=>{
+console.error(err)
+});
+
+let instance3 = new
+fish({name:"Neon Tetra", life_span:7 ,color:"Blue"});
+instance3.save().then(doc=>{
+console.log("Third object saved")}
+).catch(err=>{
+console.error(err)
+});
+}
+
+
+
+let reseed = true;
+if (reseed) {recreateDB();}
+
+
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
 
 module.exports = app;

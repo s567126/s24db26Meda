@@ -1,25 +1,32 @@
 extends layout
 
 block content
+
+    style.
+        body{
+            background-color: blue ;
+        }
+
+
     h1= title  
-    
-    form(id='fishForm' action="/resource/createfish" method="POST" class="fish-form") 
+
+    form(id='fishForm' action="/resource/createfish" method="POST") 
 
         div.form-group
-          label.fishAttr(for='name') Fish Type  
-          input#name(type='text' name='name' required)  
+            label.fishAttr(for='name') Fish Type  
+            input#name(type='text' name='name')  
         div.form-group
             label.fishAttr(for='color') Fish Color
-            input#color(type='text' name='color' required)
+            input#color(type='text' name='color')
 
         div.form-group
             label.fishAttr(for='life_span') Lifespan (Years)  
-            input#life_span(type='number' name='life_span' min="1" required)  
-            
-        input(type="submit"  class="btn btn-primary")  
-        
+            input#life_span(type='number' name='life_span')  
+
+        input(type="submit" class="btn btn-primary")  
+
         script.
-           document.forms['fishForm'].addEventListener('submit', (event) => {
+            document.forms['fishForm'].addEventListener('submit', (event) => {
                 event.preventDefault();
 
                 // TODO do something here to show user that form is being submitted (e.g., visual feedback)
@@ -40,3 +47,5 @@ block content
                     // TODO handle error (e.g., display error message)
                 });
             });
+
+

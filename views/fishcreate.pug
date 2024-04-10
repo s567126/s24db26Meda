@@ -1,0 +1,42 @@
+extends layout
+
+block content
+    h1= title  
+    
+    form(id='fishForm' action="/resource/createfish" method="POST" class="fish-form") 
+
+        div.form-group
+          label.fishAttr(for='name') Fish Type  
+          input#name(type='text' name='name' required)  
+        div.form-group
+            label.fishAttr(for='color') Fish Color
+            input#color(type='text' name='color' required)
+
+        div.form-group
+            label.fishAttr(for='life_span') Lifespan (Years)  
+            input#life_span(type='number' name='life_span' min="1" required)  
+            
+        input(type="submit"  class="btn btn-primary")  
+        
+        script.
+           document.forms['fishForm'].addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                // TODO do something here to show user that form is being submitted (e.g., visual feedback)
+
+                fetch(event.target.action, {
+                    method: 'POST',
+                    body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+                })
+                .then((resp) => {
+                    return resp.text(); // or resp.text() or whatever the server sends
+                })
+                .then((body) => {
+                    alert("Save succeeded!");
+                    // TODO handle body (potentially clear form or redirect)
+                })
+                .catch((error) => {
+                    alert("Save failed: " + error);
+                    // TODO handle error (e.g., display error message)
+                });
+            });

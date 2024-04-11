@@ -2,6 +2,9 @@ extends layout
 
 block content
 
+    
+
+    h1= title 
     style.
         #name{
             background-color: blue ;
@@ -12,12 +15,7 @@ block content
         #life_span{
             background-color: orange;
         }
-        body{
-            background-color: orange;
-        }
-
-    h1= title  
-
+        
     form(id='fishForm' action="/resource/createfish" method="POST") 
 
         div.form-group

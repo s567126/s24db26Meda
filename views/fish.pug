@@ -7,7 +7,7 @@ block content
     - let item = results
 
     div(class="container-fluid")
-        div(class="row")
+        div(class="row m-1")
             each item, index in results
                 - let destination = `dispatch(\"/fish/update?id=${item._id}\")`
                 div(class="col-sm-2")

@@ -1,17 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  p I want to play with Java.
-  button(type="button", class="btn btn-secondary", onclick="double()") I am a button
-  div(id="double") Up the amount
-
-  script.
-    let value = 0;
-    let power = 1;
-    function double() {
-      value++;
-      power *= 2;
-      document.getElementById("double").innerHTML = `Two to the power ${power} is ${value}`;
-    }
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/fish") Take me to fishs
+    br
+    a(href="/logout") Logout
